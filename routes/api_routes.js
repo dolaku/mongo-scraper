@@ -33,11 +33,11 @@ module.exports = (app) => {
                     db.Article.create(result)
                         .then(function (dbArticle) {
                             // View the added result in the console
-                            // console.log(dbArticle);
+                            console.log(dbArticle);
                         })
                         .catch(function (err) {
                             // If an error occurred, log it
-                            // console.log(err);
+                            console.log(err);
                         });
                 });
             });
