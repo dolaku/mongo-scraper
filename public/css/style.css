@@ -1,8 +1,13 @@
+div.btn {
+    cursor: pointer;
+}
+
 .card {
     color: #fff;
     background-color: transparent;
-    width: 275px;
+    width: 500px;
 }
+
 .card::after {
     background-image: url("../images/news.jpg");
     background-size: cover;
@@ -10,9 +15,27 @@
     content: "";
     filter: brightness(0.2);
     position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     z-index: -1;   
+}
+
+.article-img {
+    border: 1px solid #333;
+    border-radius: 3px;
+    height: 120px;
+    margin-right: 1.25rem;
+    max-width: 120px;
+}
+
+.card-title a {
+    color: #17a2b8;
+    transition-duration: .25s;
+}
+
+.card-title a:hover {
+    color: #15df44 !important;
+    text-decoration: none;
 }

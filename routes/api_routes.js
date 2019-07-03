@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.get('/scrape', (req, res) => {
 
         // get the html from a news site
-        axios.get('https://www.bbc.com/news/topics/cx2pk70323et/uplifting-stories')
+        axios.get('https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtVnVHZ0pWVXlnQVAB?hl=en-US&gl=US&ceid=US%3Aenbbc.com/news/topics/cx2pk70323et/uplifting-stories')
             .then(res => {
 
                 // turn that HTML into a jquery like DOM
@@ -18,14 +18,16 @@ module.exports = (app) => {
                 let result = {};
 
                 // search the DOM using jquery to find all news articles
-                $('.lx-stream-post__header-text').each((i, element) => {
-                    let title = $(element).text();
-                    let link = 'https://www.bbc.com' + $(element).parent().attr('href');
-                    let summary = $(element).parent().parent().parent().parent().siblings('.lx-stream-post__body').find('.qa-sty-summary').text();
+                $('.xrnccd').each((i, element) => {
+                    let title = $(element).find('h3.ipQwMb a').text();
+                    let link = 'https://www.bbc.com' + $(element).find('h3.ipQwMb a').attr('href');
+                    let summary = $(element).find('.SbNwzf h4.ipQwMb a').text();
+                    let image = $(element).find('img.tvs3Id').attr('src');
 
                     result = {
                         title,
                         link,
+                        image,
                         summary
                     }
 
