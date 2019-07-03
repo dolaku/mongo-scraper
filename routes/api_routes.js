@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
-var db = require("../models");
+var db = require('../models');
 
 module.exports = (app) => {
     app.get('/scrape', (req, res) => {
@@ -20,7 +20,7 @@ module.exports = (app) => {
                 // search the DOM using jquery to find all news articles
                 $('.xrnccd').each((i, element) => {
                     let title = $(element).find('h3.ipQwMb a').text();
-                    let link = 'https://www.bbc.com' + $(element).find('h3.ipQwMb a').attr('href');
+                    let link = 'https://news.google.com' + $(element).find('h3.ipQwMb a').attr('href');
                     let summary = $(element).find('.SbNwzf h4.ipQwMb a').text();
                     let image = $(element).find('img.tvs3Id').attr('src');
 
@@ -28,7 +28,8 @@ module.exports = (app) => {
                         title,
                         link,
                         image,
-                        summary
+                        summary,
+                        saved: false
                     }
 
                     // create a new Article using the result
@@ -47,17 +48,32 @@ module.exports = (app) => {
 
 
     // Route for getting all Articles from the db
-    app.get("/articles", function (req, res) {
+    app.get('/articles', (req, res) => {
         // Grab every document in the Articles collection
         db.Article.find({})
-            .then(function (dbArticle) {
-                console.log('api routes - articles')
+            .then((dbArticle) => {
                 // If we were able to successfully find Articles, send them back to the client
                 let sortedArticles = dbArticle.reverse();
                 console.log(sortedArticles);
                 res.json(sortedArticles);
             })
-            .catch(function (err) {
+            .catch((err) => {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
+
+    // Route for getting all Saved Articles from the db
+    app.get('/saved', (req, res) => {
+        db.Article.find({ saved: false })
+            .then((dbArticle) => {
+                // If we were able to successfully find Articles, send them back to the client
+                let sortedArticles = dbArticle.reverse();
+                console.log(sortedArticles);
+                res.json(sortedArticles);
+            })
+            .catch((err) => {
                 // If an error occurred, send it to the client
                 res.json(err);
             });

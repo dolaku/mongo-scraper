@@ -5,7 +5,7 @@ div.btn {
 .card {
     color: #fff;
     background-color: transparent;
-    width: 500px;
+    width: 400px;
 }
 
 .card::after {
@@ -39,3 +39,4 @@ div.btn {
     color: #15df44 !important;
     text-decoration: none;
 }
+
