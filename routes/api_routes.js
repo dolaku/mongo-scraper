@@ -48,7 +48,7 @@ module.exports = (app) => {
 
 
     // Route for getting all Articles from the db
-    app.get('/articles', (req, res) => {
+    app.get('/api/articles', (req, res) => {
         // Grab every document in the Articles collection
         db.Article.find({})
             .then((dbArticle) => {
@@ -65,8 +65,8 @@ module.exports = (app) => {
 
 
     // Route for getting all Saved Articles from the db
-    app.get('/saved', (req, res) => {
-        db.Article.find({ saved: false })
+    app.get('/api/saved', (req, res) => {
+        db.Article.find({ saved: true })
             .then((dbArticle) => {
                 // If we were able to successfully find Articles, send them back to the client
                 let sortedArticles = dbArticle.reverse();
