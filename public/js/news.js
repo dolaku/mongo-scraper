@@ -1,17 +1,24 @@
 $(document).ready(function () {
+/*======================
+    Click Listeners 
+======================*/
+
     // Click 'Scrape Now!' button
     $('#scrape-now').on('click', () => {
+        $('#notification').append('Scrapping!');
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
+
         $.ajax({
             method: 'GET',
             url: '/scrape'
         });
-
     });
     
     // Click 'Save Article' button
     $(document).on('click', '.save-article', function() {
         let articleID = $(this).attr('data-id');
-        console.log(articleID);
 
         $.ajax({
             method: 'PUT',
@@ -20,7 +27,7 @@ $(document).ready(function () {
                 saved: true
             }
         }).then(function() {
-            $('#notification').append('Your article is saved!');
+            $('#notification').append('Article saved!');
             setTimeout(() => {
                 $('#notification').empty();
             }, 1500);
@@ -31,7 +38,6 @@ $(document).ready(function () {
     // Click 'Remove Article' button
     $(document).on('click', '.remove-article', function() {
         let articleID = $(this).attr('data-id');
-        console.log(articleID);
 
         $.ajax({
             method: 'PUT',
@@ -46,33 +52,23 @@ $(document).ready(function () {
     });
 
 
-    $(document).on('click', '.user-notes', function () {
-        let articleID = $(this).attr('data-id');
-        console.log(articleID);
-        
-        $.ajax({
-            method: 'GET',
-            url: '/articles/' + articleID
-        }).then(function (data) {
-            if (data.note) {
-                $('.note-title').val(data.note.title);
-                $('.note-body').val(data.note.body);
-            }
-        })
-    });
-
+    // Click 'Save Note'
     $(document).on('click', '.save-note', function () {
         let articleID = $(this).attr('data-id');
-        console.log(articleID);
+        let targetTitle = '#note-title-' + articleID;
+        let targetBody = '#note-body-' + articleID;
+        let noteTitle = $(targetTitle).val().trim();
+        let noteBody = $(targetBody).val().trim();
+
+        console.log(noteTitle);
+        console.log(noteBody);
 
         $.ajax({
             method: 'POST',
-            url: '/articles/' + articleID,
+            url: '/api/save-note/' + articleID,
             data: {
-                // Value taken from title input
-                title: $('.note-title').val(),
-                // Value taken from note textarea
-                body: $('.note-body').val()
+                title: noteTitle,
+                body: noteBody
             }
         })
             // With that done
@@ -84,6 +80,10 @@ $(document).ready(function () {
             });
     });
 
+
+/*======================
+    Display Articles 
+======================*/
 
     // Grab the articles as a json
     $.getJSON('/api/articles', (data) => {
