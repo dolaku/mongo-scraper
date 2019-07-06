@@ -23,7 +23,24 @@ $(document).ready(function () {
             $('#notification').append('Your article is saved!');
             setTimeout(() => {
                 $('#notification').empty();
-            }, 2000);
+            }, 1500);
+        });
+
+    });
+
+    // Click 'Remove Article' button
+    $(document).on('click', '.remove-article', function() {
+        let articleID = $(this).attr('data-id');
+        console.log(articleID);
+
+        $.ajax({
+            method: 'PUT',
+            url: '/api/remove/' + articleID,
+            data: {
+                saved: false
+            }
+        }).then(function() {
+            location.reload();
         });
 
     });

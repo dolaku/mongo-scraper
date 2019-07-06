@@ -13,24 +13,26 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Mongo News Scraper</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="/saved">Saved Articles</a>
-                <a class="nav-item nav-link" href="/api/articles">Data</a>
-                <div class="btn btn-outline-success" id="scrape-now">Scrape Now!</div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Mongo News Scraper</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/saved">Saved Articles</a>
+                    <a class="nav-item nav-link" href="/api/articles">Data</a>
+                    <div class="btn btn-outline-success" id="scrape-now">Scrape Now!</div>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+        <h5 class="text-center text-success pb-2" id="notification"></h5>
+    </header>
 
     <div class="row my-4 mx-3">
-        <div class="col-12">
-            <h3 class="text-center text-success" id="notification"></h3>
+        <div class="col-12 mt-5">
             {{{ body }}}
         </div>
     </div>

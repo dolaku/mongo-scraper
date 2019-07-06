@@ -1,3 +1,13 @@
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+header h5 {
+    background-color: #f8f9fa;
+}
+
 div.btn {
     cursor: pointer;
 }
