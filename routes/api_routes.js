@@ -43,6 +43,8 @@ module.exports = (app) => {
                             console.log(err);
                         });
                 });
+                // If we were able to successfully scrape and save an Article, redirect to index
+                res.redirect('/')
             });
     });
 
@@ -63,7 +65,6 @@ module.exports = (app) => {
             });
     });
 
-
     // Route for getting all Saved Articles from the db
     app.get('/api/saved', (req, res) => {
         db.Article.find({ saved: true })
@@ -78,6 +79,22 @@ module.exports = (app) => {
                 res.json(err);
             });
     });
+
+    // Route for getting all Saved Articles from the db
+    app.put('/api/saving/:id', (req, res) => {
+        db.Article.findOneAndUpdate(
+            { _id: req.params.id }, { saved: true }
+        )
+        .then(function (data) {
+            // If we were able to successfully find Articles, send them back to the client
+            res.json(data);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+    });
+
 
 
     // Route for grabbing a specific Article by id, populate it with it's note
