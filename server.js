@@ -8,7 +8,7 @@ const html_routes = require('./routes/html_routes');
 
 const app = express();
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/news-scraper';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://user:password1@ds163680.mlab.com:63680/heroku_5n3z3dkb';
 
 // Configure middleware
 
