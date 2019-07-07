@@ -8,6 +8,7 @@ const html_routes = require('./routes/html_routes');
 
 const app = express();
 
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/news-scraper';
 
 // Configure middleware
 
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Connect to the Mongo DB
-mongoose.connect('mongodb://localhost/news-scraper', { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 api_routes(app);
