@@ -67,11 +67,7 @@ $(document).ready(function () {
                 title: noteTitle,
                 body: noteBody
             }
-        })
-            // With that done
-            .then(function (response) {
-                // Log the response
-                console.log(response);
+        }).then(function (response) {
                 // Empty the notes section
                 $('#notes').empty();
             });
@@ -93,6 +89,28 @@ $(document).ready(function () {
             // Display notes in the form
             $('#' + noteTitle).val(data[0].note.title);
             $('#' + noteBody).val(data[0].note.body);
+        });
+    });
+
+
+    // Click 'Delete Note' button
+    $(document).on('click', '.delete-note', function () {
+        let articleID = $(this).attr('data-id');
+        let noteTitle = 'note-title-' + articleID;
+        let noteBody = 'note-body-' + articleID;
+
+        $.ajax({
+            method: 'POST',
+            url: '/api/save-note/' + articleID,
+            data: {
+                title: '',
+                body: ''
+            }
+        }).then(function (data) {
+            // Remove notes in the form & close
+            $('#' + noteTitle).val('');
+            $('#' + noteBody).val('');
+            $('.collapse.show').removeClass('show');
         });
     });
 
@@ -133,6 +151,7 @@ $(document).ready(function () {
                                     <input type='text' class='form-control mb-2' id='note-title-${data[i]._id}' title='Title' placeholder='Note Title'>
                                     <textarea class='form-control' id='note-body-${data[i]._id}' rows='3' title='Note' placeholder='Note description'></textarea>
                                 </div>
+                                <div class='delete-note btn btn-outline-danger mr-2' data-id='${data[i]._id}'>Delete Note</div>
                                 <div class='save-note btn btn-outline-success' data-id='${data[i]._id}'>Save Note</div>
                             </form>
                         </div>
@@ -180,6 +199,7 @@ $(document).ready(function () {
                                     <input type='text' class='form-control mb-2' id='note-title-${data[i]._id}' placeholder='Note Title'>
                                     <textarea class='form-control' id='note-body-${data[i]._id}' rows='3' placeholder='Note description'></textarea>
                                 </div>
+                                <div class='delete-note btn btn-outline-danger mr-2' data-id='${data[i]._id}'>Delete Note</div>
                                 <div class='save-note btn btn-outline-success' data-id='${data[i]._id}'>Save Note</div>
                             </form>
                         </div>
