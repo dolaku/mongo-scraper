@@ -8,7 +8,7 @@ $(document).ready(function () {
         $('#notification').append('Scrapping!');
         setTimeout(() => {
             location.reload();
-        }, 1500);
+        }, 1000);
 
         $.ajax({
             method: 'GET',
@@ -52,16 +52,13 @@ $(document).ready(function () {
     });
 
 
-    // Click 'Save Note'
+    // Click 'Save Note' button
     $(document).on('click', '.save-note', function () {
         let articleID = $(this).attr('data-id');
         let targetTitle = '#note-title-' + articleID;
         let targetBody = '#note-body-' + articleID;
         let noteTitle = $(targetTitle).val().trim();
         let noteBody = $(targetBody).val().trim();
-
-        console.log(noteTitle);
-        console.log(noteBody);
 
         $.ajax({
             method: 'POST',
@@ -78,8 +75,26 @@ $(document).ready(function () {
                 // Empty the notes section
                 $('#notes').empty();
             });
+
+        $('.collapse.show').removeClass('show');
     });
 
+
+    // Click 'Notes' button & see saved notes
+    $(document).on('click', '.user-notes', function () {
+        let articleID = $(this).attr('data-id');
+        let noteTitle = 'note-title-' + articleID;
+        let noteBody = 'note-body-' + articleID;
+
+        $.ajax({
+            method: "GET",
+            url: '/api/notes/' + articleID
+        }).then(function (data) {
+            // Display notes in the form
+            $('#' + noteTitle).val(data[0].note.title);
+            $('#' + noteBody).val(data[0].note.body);
+        });
+    });
 
 /*======================
     Display Articles 
